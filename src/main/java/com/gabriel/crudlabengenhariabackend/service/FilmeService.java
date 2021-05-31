@@ -16,4 +16,12 @@ public class FilmeService {
     public List<Filme> findAll() {
         return filmeRepository.findAll();
     }
+
+    public Filme getById(Long id) {
+        return filmeRepository.getById(id);
+    }
+
+    public Filme save(Filme filme) {
+        return filmeRepository.save(filme);
+    }
 }
