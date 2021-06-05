@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,5 +45,11 @@ public class FilmeController {
     public FilmeDTO getFilmePorId(@PathVariable Long id) {
         Filme filme = filmeService.getById(id);
         return mapper.map(filme, FilmeDTO.class);
+    }
+
+    @PutMapping("/filmes/update")
+    public ResponseEntity<FilmeDTO> updateFilme(@Valid @RequestBody Filme filme) {
+        FilmeDTO filmeDTO = mapper.map(filmeService.updateFilme(filme), FilmeDTO.class);
+        return ResponseEntity.status(HttpStatus.OK).body(filmeDTO);
     }
 }

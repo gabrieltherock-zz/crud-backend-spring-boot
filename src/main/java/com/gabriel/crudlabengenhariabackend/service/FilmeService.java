@@ -24,4 +24,10 @@ public class FilmeService {
     public Filme save(Filme filme) {
         return filmeRepository.save(filme);
     }
+
+    public Filme updateFilme(Filme novofilme) {
+        if (!filmeRepository.existsById(novofilme.getId()))
+            return null;
+        return filmeRepository.save(novofilme);
+    }
 }
