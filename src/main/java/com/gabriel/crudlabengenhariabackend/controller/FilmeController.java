@@ -38,6 +38,9 @@ public class FilmeController {
 
     @PutMapping("/filmes/update")
     public ResponseEntity<FilmeDTO> updateFilme(@Valid @RequestBody FilmeDTO filme) {
+        if (!filmeService.existe(filme.getId())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(filmeService.updateFilme(filme));
     }
 }

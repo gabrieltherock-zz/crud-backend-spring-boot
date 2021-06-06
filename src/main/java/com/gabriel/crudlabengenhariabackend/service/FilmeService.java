@@ -37,8 +37,6 @@ public class FilmeService {
     }
 
     public FilmeDTO updateFilme(FilmeDTO novofilme) {
-        if (!filmeRepository.existsById(novofilme.getId()))
-            return null;
         Filme filme = filmeRepository.save(mapToFilme(novofilme));
         return mapToFilmeDTO(filme);
     }
@@ -49,5 +47,9 @@ public class FilmeService {
 
     public Filme mapToFilme(FilmeDTO filmeDTO) {
         return mapper.map(filmeDTO, Filme.class);
+    }
+
+    public boolean existe(Long id) {
+        return filmeRepository.existsById(id);
     }
 }
