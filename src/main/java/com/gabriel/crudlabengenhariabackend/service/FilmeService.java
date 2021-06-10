@@ -36,9 +36,15 @@ public class FilmeService {
         return mapToFilmeDTO(filme);
     }
 
-    public FilmeDTO updateFilme(FilmeDTO novofilme) {
-        Filme filme = filmeRepository.save(mapToFilme(novofilme));
+    public FilmeDTO updateFilme(Long id, FilmeDTO novofilme) {
+        Filme filme = mapToFilme(novofilme);
+        filme.setId(id);
+        filme = filmeRepository.save(filme);
         return mapToFilmeDTO(filme);
+    }
+
+    public void deleteFilme(Long id) {
+        filmeRepository.deleteById(id);
     }
 
     public FilmeDTO mapToFilmeDTO(Filme filme) {

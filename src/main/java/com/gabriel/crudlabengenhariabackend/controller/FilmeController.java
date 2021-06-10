@@ -5,6 +5,7 @@ import com.gabriel.crudlabengenhariabackend.service.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +22,6 @@ public class FilmeController {
     @Autowired
     FilmeService filmeService;
 
-    @PostMapping("/filmes/create")
-    public ResponseEntity<FilmeDTO> postFilme(@Valid @RequestBody FilmeDTO filme) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(filmeService.save(filme));
-    }
-
     @GetMapping("/filmes")
     public ResponseEntity<List<FilmeDTO>> getFilmes() {
         return ResponseEntity.status(HttpStatus.OK).body(filmeService.findAll());
@@ -33,14 +29,32 @@ public class FilmeController {
 
     @GetMapping("/filmes/{id}")
     public ResponseEntity<FilmeDTO> getFilmePorId(@PathVariable Long id) {
+        if (!filmeService.existe(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(filmeService.getById(id));
     }
 
-    @PutMapping("/filmes/update")
-    public ResponseEntity<FilmeDTO> updateFilme(@Valid @RequestBody FilmeDTO filme) {
-        if (!filmeService.existe(filme.getId())) {
+    @PostMapping("/filmes")
+    public ResponseEntity<FilmeDTO> postFilme(@Valid @RequestBody FilmeDTO filme) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(filmeService.save(filme));
+    }
+
+    @PutMapping("/filmes/{id}")
+    public ResponseEntity<FilmeDTO> updateFilme(@PathVariable Long id,
+                                                @Valid @RequestBody FilmeDTO filme) {
+        if (!filmeService.existe(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(filmeService.updateFilme(filme));
+        return ResponseEntity.status(HttpStatus.OK).body(filmeService.updateFilme(id, filme));
+    }
+
+    @DeleteMapping("/filmes/{id}")
+    public ResponseEntity<String> deleteFilme(@PathVariable Long id) {
+        if (!filmeService.existe(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        filmeService.deleteFilme(id);
+        return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }
