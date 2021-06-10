@@ -47,6 +47,10 @@ public class FilmeService {
         filmeRepository.deleteById(id);
     }
 
+    public void deleteAll() {
+        filmeRepository.deleteAll();
+    }
+
     public FilmeDTO mapToFilmeDTO(Filme filme) {
         return mapper.map(filme, FilmeDTO.class);
     }

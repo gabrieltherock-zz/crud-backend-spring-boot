@@ -50,11 +50,17 @@ public class FilmeController {
     }
 
     @DeleteMapping("/filmes/{id}")
-    public ResponseEntity<String> deleteFilme(@PathVariable Long id) {
+    public ResponseEntity<String> deleteFilmePorId(@PathVariable Long id) {
         if (!filmeService.existe(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         filmeService.deleteFilme(id);
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    @DeleteMapping("/filmes")
+    public ResponseEntity<String> deleteFilmes() {
+        filmeService.deleteAll();
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }
