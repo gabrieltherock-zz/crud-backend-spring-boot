@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+@CrossOrigin
 @RestController
 public class FilmeController {
 
@@ -31,9 +31,6 @@ public class FilmeController {
 
     @GetMapping("/filmes/{id}")
     public ResponseEntity<FilmeDTO> getFilmePorId(@PathVariable Long id) {
-        if (!filmeService.existe(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
         return ResponseEntity.status(HttpStatus.OK).body(filmeService.getById(id));
     }
 
@@ -45,17 +42,11 @@ public class FilmeController {
     @PutMapping("/filmes/{id}")
     public ResponseEntity<FilmeDTO> updateFilme(@PathVariable Long id,
                                                 @Valid @RequestBody FilmeDTO filme) {
-        if (!filmeService.existe(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
         return ResponseEntity.status(HttpStatus.OK).body(filmeService.updateFilme(id, filme));
     }
 
     @DeleteMapping("/filmes/{id}")
     public ResponseEntity<String> deleteFilmePorId(@PathVariable Long id) {
-        if (!filmeService.existe(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
         filmeService.deleteFilme(id);
         return ResponseEntity.status(HttpStatus.OK).body("");
     }

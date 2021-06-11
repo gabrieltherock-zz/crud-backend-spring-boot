@@ -1,5 +1,6 @@
 package com.gabriel.crudlabengenhariabackend.service;
 
+import com.gabriel.crudlabengenhariabackend.exception.ObjectNotFoundException;
 import com.gabriel.crudlabengenhariabackend.model.Filme;
 import com.gabriel.crudlabengenhariabackend.model.FilmeDTO;
 import com.gabriel.crudlabengenhariabackend.repository.FilmeRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,8 +29,8 @@ public class FilmeService {
     }
 
     public FilmeDTO getById(Long id) {
-        Filme filme = filmeRepository.getById(id);
-        return mapToFilmeDTO(filme);
+        Optional<Filme> filme = filmeRepository.findById(id);
+        return mapToFilmeDTO(filme.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!")));
     }
 
     public FilmeDTO save(FilmeDTO filmeDTO) {
@@ -37,6 +39,7 @@ public class FilmeService {
     }
 
     public FilmeDTO updateFilme(Long id, FilmeDTO novofilme) {
+        getById(id);
         Filme filme = mapToFilme(novofilme);
         filme.setId(id);
         filme = filmeRepository.save(filme);
@@ -44,6 +47,7 @@ public class FilmeService {
     }
 
     public void deleteFilme(Long id) {
+        getById(id);
         filmeRepository.deleteById(id);
     }
 
@@ -57,9 +61,5 @@ public class FilmeService {
 
     public Filme mapToFilme(FilmeDTO filmeDTO) {
         return mapper.map(filmeDTO, Filme.class);
-    }
-
-    public boolean existe(Long id) {
-        return filmeRepository.existsById(id);
     }
 }
