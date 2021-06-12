@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -25,8 +26,8 @@ public class FilmeController {
     FilmeService filmeService;
 
     @GetMapping("/filmes")
-    public ResponseEntity<List<FilmeDTO>> getFilmes() {
-        return ResponseEntity.status(HttpStatus.OK).body(filmeService.findAll());
+    public ResponseEntity<List<FilmeDTO>> getFilmes(@RequestParam(value = "titulo", defaultValue = "") String titulo) {
+        return ResponseEntity.status(HttpStatus.OK).body(filmeService.findAll(titulo));
     }
 
     @GetMapping("/filmes/{id}")

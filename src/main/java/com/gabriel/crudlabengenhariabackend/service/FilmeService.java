@@ -21,8 +21,14 @@ public class FilmeService {
     @Autowired
     ModelMapper mapper;
 
-    public List<FilmeDTO> findAll() {
-        List<Filme> filmes = filmeRepository.findAll();
+    public List<FilmeDTO> findAll(String titulo) {
+        List<Filme> filmes;
+
+        if (titulo.isEmpty()) {
+            filmes = filmeRepository.findAll();
+        } else {
+            filmes = filmeRepository.findAllByTituloContains(titulo);
+        }
         return filmes.stream()
                 .map(this::mapToFilmeDTO)
                 .collect(Collectors.toList());
