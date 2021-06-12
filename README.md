@@ -4,6 +4,8 @@ Backend de um CRUD de filmes para a disciplina de Laboratório de Engenharia de 
 
 Feito usando Spring Boot com banco de dados MySQL. Usei a biblioteca logbook para logar todas as requisições que chegaram ao backend.
 
+Frontend: https://github.com/gabrieltherock/crud-frontend-react-js
+
 Vídeo mostrando o sistema funcionando: https://www.youtube.com/watch?v=GB5PgJqmm8g
 
 # endpoints
