@@ -4,7 +4,7 @@ Backend de um CRUD de filmes para a disciplina de Laboratório de Engenharia de 
 
 Feito usando Spring Boot com banco de dados MySQL. Usei a biblioteca logbook para logar todas as requisições que chegaram ao backend.
 
-# Endpoints
+# endpoints
 
 GET /filmes --> retorna uma lista com todos os filmes no seguinte formato:
 
