@@ -1,7 +1,7 @@
-# crud-labengenharia-backend
+# crud-backend-spring-boot
 Backend de um CRUD de filmes para a disciplina de Laboratório de Engenharia de Software.
 
-Feito usando Spring Boot com banco de dados MySQL.
+Feito usando Spring Boot com banco de dados MySQL. Usei a biblioteca logbook para logar todas as requisições que chegaram ao backend.
 
 GET /filmes --> retorna uma lista com todos os filmes no seguinte formato:
 
